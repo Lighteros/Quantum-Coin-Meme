@@ -1,7 +1,15 @@
 /* ==========================================================================
    QUANTUM COIN ($QCOIN) - SITE CONFIG
+   Edit the CA below; chart, buy links and Copy follow automatically.
    No emojis anywhere in copy.
    ========================================================================== */
+
+// Solana contract address (CA). Leave "" until launch.
+// Once set, the DexScreener chart, the PumpSwap buy links and the Copy button switch on.
+const CA = "7SsZWPvLHpMizSGD8RByEbjUA8VatHWAts4UpjB4pump";
+
+const SOL_MINT = "So11111111111111111111111111111111111111112";
+
 window.SITE = {
   name: "Quantum Coin",
   symbol: "QCOIN",
@@ -9,16 +17,19 @@ window.SITE = {
   aboutLong: "Holders ride golden orbits through violet nebulae. No roadmap of empty promises — just a luxury meme aesthetic on Solana, a golden Q as the signal, and a community ready for whatever the next collapse of the wavefunction brings.",
   chain: "solana",
   chainName: "Solana",
-  contract: "Coming soon",
+  contract: CA || "Coming soon",
+  launched: Boolean(CA),
   domain: "quantumcoin.lol",
   links: {
     x: "https://x.com/QCoin_Sol",
     telegram: "",
-    buy: "https://swap.pump.fun/",
-    dexscreener: "https://dexscreener.com/solana"
+    buy: CA ? `https://swap.pump.fun/?input=${SOL_MINT}&output=${CA}` : "",
+    pumpfun: CA ? `https://pump.fun/coin/${CA}` : "",
+    dexscreener: CA ? `https://dexscreener.com/solana/${CA}` : "",
+    explorer: CA ? `https://solscan.io/token/${CA}` : ""
   },
   dexName: "PumpSwap",
-  dexscreenerEmbed: "",
+  dexscreenerEmbed: CA ? `https://dexscreener.com/solana/${CA}?embed=1&theme=dark&trades=0&info=0` : "",
   icons: {
     chain: "assets/icons/solana.svg",
     dex: "assets/icons/pumpfun-logomark.svg",
@@ -57,7 +68,7 @@ window.SITE = {
     { label: "Ticker", value: "$QCOIN" },
     { label: "Chain", value: "Solana" },
     { label: "Tax", value: "0/0" },
-    { label: "CA", value: "Soon" }
+    { label: "CA", value: CA ? (CA.slice(0, 4) + "…" + CA.slice(-4)) : "Soon" }
   ],
   // Gallery uses remaining media; hero=01, about=02, steps=03-06, floaters=gen from 07/09/11/12
   gallery: [
